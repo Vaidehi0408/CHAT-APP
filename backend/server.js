@@ -21,8 +21,14 @@ app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/user", userRoutes);
+// app.use(express.static(path.join(__dirname, "/frontend/dist")));
+// app.get("*", (req, res) => {
+//   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+// });
 app.use(express.static(path.join(__dirname, "/frontend/dist")));
-app.get("*", (req, res) => {
+
+app.get(/^(?!\/api).*/, (req, res) => {
+  // This will only serve index.html if the path doesn't start with /api
   res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
 });
 
